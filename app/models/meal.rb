@@ -12,6 +12,10 @@ class Meal
     ['id', 'name', 'price']
   end
 
+  def build_row
+    [@id, @name, @price]
+  end
+
 end
 
 

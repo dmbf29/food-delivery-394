@@ -11,4 +11,8 @@ class Customer
   def self.headers
     ['id', 'name', 'address']
   end
+
+  def build_row
+    [@id, @name, @address]
+  end
 end
