@@ -1,0 +1,4 @@
+id,username,password,role
+1,momo,secret,manager
+2,pins,secret,delivery_guy
+3,julien,secret,delivery_guy
