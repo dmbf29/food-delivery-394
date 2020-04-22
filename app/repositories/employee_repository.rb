@@ -16,6 +16,17 @@ class EmployeeRepository
     end
   end
 
+  def find(id)
+    # return an instance / nil
+    @employees.find { |employee| employee.id == id }
+  end
+
+  def delivery_guys
+    @employees.select do |employee|
+      employee.delivery_guy?
+    end
+  end
+
 
   private
 

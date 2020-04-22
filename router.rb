@@ -1,15 +1,16 @@
 class Router
-  def initialize(meals_controller, customers_controller, sessions_controller)
+  def initialize(meals_controller, customers_controller, sessions_controller, orders_controller)
     @meals_controller = meals_controller
     @customers_controller = customers_controller
     @sessions_controller = sessions_controller
+    @orders_controller = orders_controller
     @running = true
   end
 
   def run
     while @running
       @employee = @sessions_controller.sign_in
-      while @employee
+      while @employee && @running
         if @employee.manager?
           choice = display_manager_menu
           print `clear`
@@ -34,6 +35,8 @@ class Router
     puts "2 - Add a new meal"
     puts "3 - List all customers"
     puts "4 - Add a new customer"
+    puts "5 - List Undelivered orders"
+    puts "6 - Add an order"
     puts "8 - Sign out"
     puts "9 - Quit"
     print "> "
@@ -46,8 +49,10 @@ class Router
     when 2 then @meals_controller.add
     when 3 then @customers_controller.list
     when 4 then @customers_controller.add
-    when 8 then @employee = nil
-    when 9 then @running = false
+    when 5 then @orders_controller.list_undelivered_orders
+    when 6 then @orders_controller.add
+    when 8 then logout!
+    when 9 then stop!
     else
       puts "Try again..."
     end
@@ -58,7 +63,8 @@ class Router
     puts "------------ MENU ------------"
     puts "------------------------------"
     puts "What do you want to do"
-    puts "1 - "
+    puts "1 - List my undelivered orders"
+    puts "2 - Mark as delivered"
     puts "8 - Sign out"
     puts "9 - Quit"
     print "> "
@@ -67,10 +73,21 @@ class Router
 
   def delivery_actions(choice)
     case choice
-    when 8 then @employee = nil
-    when 9 then @running = false
+    when 1 then @orders_controller.my_undelivered_orders(@employee)
+    when 2 then @orders_controller.mark(@employee)
+    when 8 then logout!
+    when 9 then stop!
     else
       puts "Try again..."
     end
+  end
+
+  def logout!
+    @employee = nil
+  end
+
+  def stop!
+    logout!
+    @running = false
   end
 end

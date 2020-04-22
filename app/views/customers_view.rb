@@ -1,8 +1,8 @@
 class CustomersView
   def display_customers(customers) # an array of instances
     if customers.any?
-      customers.each do |customer|
-        puts "#{customer.id}.) #{customer.name} - #{customer.address}"
+      customers.each_with_index do |customer, index|
+        puts "#{index + 1}.) #{customer.name} - #{customer.address}"
       end
     else
       puts Customer.headers.join(', ')

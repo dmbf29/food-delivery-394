@@ -1,7 +1,7 @@
 class MealsView
   def display_meals(meals) # an array of instances
-    meals.each do |meal|
-      puts "#{meal.id}.) #{meal.name} - #{meal.price}/yen"
+    meals.each_with_index do |meal, index|
+      puts "#{index + 1}.) #{meal.name} - #{meal.price}/yen"
     end
   end
 
